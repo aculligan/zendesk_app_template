@@ -1,1 +1,1 @@
-export default window.ZAFClient.init()
+export default window.ZAFClient.init();

@@ -9,8 +9,8 @@ client.on('app.registered', function(appData) {
     I18n.loadTranslations(userData['currentUser.locale']);
 
     // Look up app module for the current location
-    let location = appData.context.location;
-    let App = require(`./${location}.js`).default;
+    const {location} = appData.context;
+    const App = require(`./${location}.js`).default;
 
     // Create a new instance of the app
     return new App(client, appData);

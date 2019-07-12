@@ -1,11 +1,11 @@
-import Handlebars from 'handlebars'
-import manifest from '../../manifest.json'
-import i18n from './i18n'
+import Handlebars from 'handlebars';
+import manifest from 'app_manifest';
+import i18n from 'i18n';
 
-const defaultLocale = manifest.defaultLocale || 'en'
+const defaultLocale = manifest.defaultLocale || 'en';
 
 // map to store the key/translation pairs of the loaded language
-let translations
+let translations;
 
 /**
  * Replace {{placeholder}} text in the translation string with context values:
@@ -15,25 +15,26 @@ let translations
  * @param {Object} context object contains placeholder/value pairs
  * @return {String} parsed string
  */
+
 function parsePlaceholders (str, context) {
-  const regex = /{{(.*?)}}/g
-  const matches = []
-  let match
+  const regex = /{{(.*?)}}/g;
+  const matches = [];
+  let match;
 
   do {
-    match = regex.exec(str)
-    if (match) matches.push(match)
-  } while (match)
+    match = regex.exec(str);
+    if (match) matches.push(match);
+  } while (match);
 
   return matches.reduce(
-    (str, match) => {
-      const newRegex = new RegExp(match[0], 'g')
-      str = str.replace(newRegex, context[match[1]])
+    function () {
+      const newRegex = new RegExp(match[0], 'g');
+      const newString = str.replace(newRegex, context[match[1]]);
 
-      return str
+      return newString;
     },
     str
-  )
+  );
 }
 
 const I18n = {
@@ -43,11 +44,12 @@ const I18n = {
    * @param {String} locale
    * @return {Object} translation object
    */
-  tryRequire: function (locale) {
+
+  tryRequire (locale) {
     try {
-      return require(`../../translations/${locale}.json`)
+      return require(`../../translations/${locale}.json`);
     } catch (e) {
-      return null
+      return null;
     }
   },
 
@@ -58,18 +60,19 @@ const I18n = {
    * @param {Object} context object contains placeholder/value pairs
    * @return {String} tranlated string
    */
-  t: function (key, context) {
+
+  t (key, context) {
     try {
-      const keyType = typeof key
-      if (keyType !== 'string') throw new Error(`Translation key must be a string, got: ${keyType}`)
+      const keyType = typeof key;
+      if (keyType !== 'string') throw new Error(`Translation key must be a string, got: ${keyType}`);
 
-      const template = translations[key]
-      if (!template) throw new Error(`Missing translation: ${key}`)
-      if (typeof template !== 'string') throw new Error(`Invalid translation for key: ${key}`)
+      const template = translations[key];
+      if (!template) throw new Error(`Missing translation: ${key}`);
+      if (typeof template !== 'string') throw new Error(`Invalid translation for key: ${key}`);
 
-      return parsePlaceholders(template, context)
+      return parsePlaceholders(template, context);
     } catch (e) {
-      return e.message
+      return e.message;
     }
   },
 
@@ -78,25 +81,26 @@ const I18n = {
    * @param {String} locale
    * @return {Object} translation object
    */
-  loadTranslations: function (locale) {
+
+  loadTranslations (locale) {
     translations = I18n.tryRequire(locale) ||
-      I18n.tryRequire(locale.replace(/-.+$/, '')) || // e.g. fallback `en-US` to `en`
+      I18n.tryRequire(locale.replace(/-.+$/, '')) ||
       I18n.tryRequire(defaultLocale) ||
-      {}
+      {};
 
-    return translations
+    return translations;
   }
-}
+};
 
-I18n.loadTranslations(defaultLocale)
+I18n.loadTranslations(defaultLocale);
 
 Handlebars.registerHelper('t', (key, context) => {
   try {
-    return i18n.t(key, context.hash)
+    return i18n.t(key, context.hash);
   } catch (e) {
-    console.error(e)
-    return e.message
+    console.error(e);
+    return e.message;
   }
-})
+});
 
-export default I18n
+export default I18n;

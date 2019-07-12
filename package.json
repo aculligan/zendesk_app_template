@@ -27,10 +27,6 @@
     "watch": "webpack --watch --env.development"
   },
   "devDependencies": {
-    "standard": "^13.0.1",
-    "webpack-bundle-analyzer": "^3.3.2"
-  },
-  "dependencies": {
     "@babel/core": "^7.5.4",
     "@babel/preset-env": "^7.5.4",
     "@zendeskgarden/css-arrows": "^3.1.1",
@@ -65,8 +61,12 @@
     "postcss-preset-env": "^6.7.0",
     "precss": "^4.0.0",
     "regenerator-runtime": "^0.13.2",
+    "standard": "^13.0.1",
     "underscore": "^1.9.1",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.5",
     "webpack": "^4.35.3"
+  },
+  "dependencies": {
   }
 }

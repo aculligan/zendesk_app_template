@@ -1,30 +1,31 @@
 const path = require('path');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const {devDependencies} = require('./package.json');
 const TranslationsPlugin = require('./webpack/translations-plugin');
-const devDependencies = require('./package.json').devDependencies;
 
 
-function config (env = {}) {
+function settings (env = {}) {
 
   // this function reads Zendesk Garden npm dependencies from package.json and
   // creates a jsDelivr url
   const zendeskGardenJsDelivrUrl = (function () {
-    const pkg = Object.keys(devDependencies).filter(item => item.includes('@zendeskgarden/css'))
+    const pkg = Object.keys(devDependencies).filter(item => item.includes('@zendeskgarden/css'));
     const getPkgName = (url, pkg) => {
       const version = devDependencies[pkg]
         .replace(/^[\^~]/g, '')
-        .replace(/\.\d$/, '')
-      url = `${url}npm/${pkg}@${version},`
-      return url
-    }
+        .replace(/\.\d$/, '');
+      url = `${url}npm/${pkg}@${version},`;
+      return url;
+    };
     return pkg.length && pkg.reduce(
       getPkgName,
       'https://cdn.jsdelivr.net/combine/'
-    ).slice(0, -1)
-  }())
+    ).slice(0, -1);
+  }());
 
   const externalAssets = {
     css: [
@@ -39,7 +40,7 @@ function config (env = {}) {
       // this one is mandatory
       'https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js'
     ]
-  }
+  };
 
   const config = {
     mode: env.production ? 'production' : 'development',
@@ -130,17 +131,15 @@ function config (env = {}) {
         filename: 'index.html'
       })
     ]
-
-  }
+  };
 
   if (env.stats) {
-    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
     config.plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: 'static'
-    }))
+    }));
   }
 
-  return config
+  return config;
 }
 
-module.exports = config
+module.exports = settings;
