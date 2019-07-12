@@ -1,0 +1,13 @@
+{
+  "app": {
+    "description": "Description",
+    "installation_instructions": "No special instructions",
+    "long_description": "Long Description",
+    "name": "App",
+    "short_description": "Short Description",
+    "title": "Example App"
+  },
+  "default": {
+    "organizations": "organizations"
+  }
+}

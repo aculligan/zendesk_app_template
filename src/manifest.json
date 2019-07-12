@@ -1,0 +1,19 @@
+{
+  "author": {
+    "name": "Author",
+    "email": "support@email.com",
+    "url": "https://app.com"
+  },
+  "defaultLocale": "en",
+  "frameworkVersion": "2.0",
+  "gaID": "UA-XXXXXXXX-1",
+  "location": {
+    "support": {
+      "ticket_sidebar": "assets/index.html"
+    }
+  },
+  "name": "App",
+  "private": false,
+  "singleInstall": true,
+  "version": "1.0"
+}

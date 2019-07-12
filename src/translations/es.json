@@ -1,0 +1,13 @@
+{
+  "app": {
+    "description": "Descripción",
+    "installation_instructions": "No hay instrucciones especiales",
+    "long_description": "Descripción larga",
+    "name": "App",
+    "short_description": "Descripción corta",
+    "title": "App"
+  },
+  "default": {
+    "organizations": "organizaciones"
+  }
+}
